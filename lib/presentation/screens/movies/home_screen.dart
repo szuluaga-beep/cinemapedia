@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
     return const Scaffold(
       // appBar: ,
       body: _HomeView(),
+      bottomNavigationBar: CustomBottomNavigation(),
     );
   }
 }
