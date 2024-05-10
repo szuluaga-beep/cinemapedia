@@ -9,14 +9,15 @@ import 'package:cinemapedia/domain/entities/movie.dart';
 class MovieDbDatasource extends MoviesDatasource {
   final dio = Dio(BaseOptions(
       baseUrl: 'https://api.themoviedb.org/3',
+      headers: {'Authorization': Environment.movieDbKey},
       queryParameters: {
-        'api-key': Environment.movieDbKey,
+        // 'api-key': Environment.movieDbKey,
         'language': 'es-MX'
       }));
 
   @override
   Future<List<Movie>> getNowPlaying({int page = 1}) async {
-    final response = await dio.get('/movies/now_playing');
+    final response = await dio.get('/movie/now_playing');
     final movieDBResponse = MovieDbResponse.fromJson(response.data);
 
     final List<Movie> movies = movieDBResponse.results
