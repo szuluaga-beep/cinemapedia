@@ -39,17 +39,37 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
     // if (nowPlayingMovies.isEmpty) return CircularProgressIndicator();
 
-    return Column(
-      children: [
-        const CustomAppbar(),
-        MoviesSlideShow(movies: slideShowMovies),
-        MovieHotizonalListView(
-          movies: nowPlayingMovies,
-          title: 'En cines',
-          subTitle: 'Lunes 20',
-          loadNextPage: () =>
-              ref.read(nowPlayMoviesProvider.notifier).loadNextPage(),
-        )
+    return CustomScrollView(
+      slivers: [
+        const SliverAppBar(
+          floating: true,
+          title: CustomAppbar(),
+        ),
+        SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+          return Column(
+            children: [
+              MoviesSlideShow(movies: slideShowMovies),
+              MovieHotizonalListView(
+                movies: nowPlayingMovies,
+                title: 'En cines',
+                subTitle: 'Lunes 20',
+                loadNextPage: () =>
+                    ref.read(nowPlayMoviesProvider.notifier).loadNextPage(),
+              ),
+              MovieHotizonalListView(
+                movies: nowPlayingMovies,
+                title: 'En cines',
+                subTitle: 'Lunes 20',
+                loadNextPage: () =>
+                    ref.read(nowPlayMoviesProvider.notifier).loadNextPage(),
+              ),
+              const SizedBox(
+                height: 10,
+              )
+            ],
+          );
+        }, childCount: 1))
       ],
     );
   }
