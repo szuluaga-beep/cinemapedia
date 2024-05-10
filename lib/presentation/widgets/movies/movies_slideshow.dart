@@ -55,8 +55,8 @@ class _Slide extends StatelessWidget {
           child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.network(
-                movie.backdropPath,
-                fit: BoxFit.cover,
+                movie.posterPath,
+                fit: BoxFit.fitWidth,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress != null) {
                     return const DecoratedBox(

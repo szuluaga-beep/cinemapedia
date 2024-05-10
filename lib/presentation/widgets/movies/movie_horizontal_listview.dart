@@ -3,7 +3,7 @@ import 'package:cinemapedia/config/helpers/human_format.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:flutter/material.dart';
 
-class MovieHotizonalListView extends StatelessWidget {
+class MovieHotizonalListView extends StatefulWidget {
   final List<Movie> movies;
   final String? title;
   final String? subTitle;
@@ -17,23 +17,52 @@ class MovieHotizonalListView extends StatelessWidget {
       this.loadNextPage});
 
   @override
+  State<MovieHotizonalListView> createState() => _MovieHotizonalListViewState();
+}
+
+class _MovieHotizonalListViewState extends State<MovieHotizonalListView> {
+  final scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    scrollController.addListener(() {
+      if (widget.loadNextPage == null) return;
+
+      if ((scrollController.position.pixels + 200) >=
+          scrollController.position.maxScrollExtent) {
+        // print('hello');
+        widget.loadNextPage!();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 400,
       child: Column(
         children: [
-          if (title != null || subTitle != null)
+          if (widget.title != null || widget.subTitle != null)
             _Title(
-              title: title,
-              subTitle: subTitle,
+              title: widget.title,
+              subTitle: widget.subTitle,
             ),
           Expanded(
               child: ListView.builder(
-            itemCount: movies.length,
+            controller: scrollController,
+            itemCount: widget.movies.length,
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
-              return _Slide(movie: movies[index]);
+              return _Slide(movie: widget.movies[index]);
             },
           ))
         ],
