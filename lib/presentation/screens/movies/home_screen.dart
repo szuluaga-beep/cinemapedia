@@ -30,12 +30,18 @@ class _HomeViewState extends ConsumerState<_HomeView> {
   void initState() {
     super.initState();
     ref.read(nowPlayMoviesProvider.notifier).loadNextPage();
+    ref.read(popularMoviesProvider.notifier).loadNextPage();
+    ref.read(upcomingMoviesProvider.notifier).loadNextPage();
+    ref.read(topRatedMoviesProvider.notifier).loadNextPage();
   }
 
   @override
   Widget build(BuildContext context) {
     final nowPlayingMovies = ref.watch(nowPlayMoviesProvider);
     final slideShowMovies = ref.watch(moviesSlideshowProvider);
+    final popularMovies = ref.watch(popularMoviesProvider);
+    final upcomingMovies = ref.watch(upcomingMoviesProvider);
+    final topratedMovies = ref.watch(topRatedMoviesProvider);
 
     // if (nowPlayingMovies.isEmpty) return CircularProgressIndicator();
 
@@ -58,11 +64,25 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                     ref.read(nowPlayMoviesProvider.notifier).loadNextPage(),
               ),
               MovieHotizonalListView(
-                movies: nowPlayingMovies,
-                title: 'En cines',
-                subTitle: 'Lunes 20',
+                movies: popularMovies,
+                title: 'Populares',
+                // subTitle: 'Lunes 20',
                 loadNextPage: () =>
-                    ref.read(nowPlayMoviesProvider.notifier).loadNextPage(),
+                    ref.read(popularMoviesProvider.notifier).loadNextPage(),
+              ),
+              MovieHotizonalListView(
+                movies: upcomingMovies,
+                title: 'Próximamente',
+                // subTitle: 'Lunes 20',
+                loadNextPage: () =>
+                    ref.read(upcomingMoviesProvider.notifier).loadNextPage(),
+              ),
+              MovieHotizonalListView(
+                movies: topratedMovies,
+                title: 'Mejor calificadas',
+                // subTitle: 'Lunes 20',
+                loadNextPage: () =>
+                    ref.read(topRatedMoviesProvider.notifier).loadNextPage(),
               ),
               const SizedBox(
                 height: 10,
