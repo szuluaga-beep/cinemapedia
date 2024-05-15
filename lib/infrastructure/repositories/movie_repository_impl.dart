@@ -3,32 +3,37 @@ import 'package:cinemapedia/domain/datasources/movies_datasource.dart';
 import 'package:cinemapedia/domain/repositories/movies_repository.dart';
 
 class MovieRepositoryImpl extends MoviesRepository {
-  final MoviesDatasource datasouce;
+  final MoviesDatasource datasource;
 
-  MovieRepositoryImpl(this.datasouce);
+  MovieRepositoryImpl(this.datasource);
 
   @override
   Future<List<Movie>> getNowPlaying({int page = 1}) {
-    return datasouce.getNowPlaying(page: page);
+    return datasource.getNowPlaying(page: page);
   }
 
   @override
   Future<List<Movie>> getPopular({int page = 1}) {
-    return datasouce.getPopular(page: page);
+    return datasource.getPopular(page: page);
   }
 
   @override
   Future<List<Movie>> getUpcoming({int page = 1}) {
-    return datasouce.getUpcoming(page: page);
+    return datasource.getUpcoming(page: page);
   }
 
   @override
   Future<List<Movie>> getTopRated({int page = 1}) {
-    return datasouce.getTopRated(page: page);
+    return datasource.getTopRated(page: page);
   }
 
   @override
   Future<Movie> getMovieById(String id) {
-    return datasouce.getMovieById(id);
+    return datasource.getMovieById(id);
+  }
+
+  @override
+  Future<List<Movie>> searchMovie(String query) {
+    return datasource.searchMovie(query);
   }
 }
